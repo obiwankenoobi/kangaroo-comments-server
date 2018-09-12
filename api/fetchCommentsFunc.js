@@ -13,8 +13,9 @@ let fetchComments = async (siteName, pageName) => {
 			console.log('pageObj', pageObj)
 			if (typeof pageObj != 'object') {
 				response = 'noSiteFound';
+			} else {
+				response = pageObj.comments; // grab the comments from the array
 			}
-			response = pageObj.comments; // grab the comments from the array
 		} 
 		else response = 'noSiteFound'; // if there is no site found assign msg to the response
 	});
