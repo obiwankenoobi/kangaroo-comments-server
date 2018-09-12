@@ -10,6 +10,10 @@ let fetchComments = async (siteName, pageName) => {
 		if (site && site.pages.length > 0) { // if site found and there is already comments there
 			let pagesArr = site.pages; // assign the pages array to var
 			let pageObj = pagesArr.filter((page) => page.pageName == pageName)[0]; // grab the page we want from the array
+			console.log('pageObj', pageObj)
+			if (typeof pageObj != 'object') {
+				response = 'noSiteFound';
+			}
 			response = pageObj.comments; // grab the comments from the array
 		} 
 		else response = 'noSiteFound'; // if there is no site found assign msg to the response
