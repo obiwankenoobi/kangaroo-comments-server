@@ -1,0 +1,10 @@
+POST http://10.0.0.12:3010/addComment HTTP/1.1
+
+
+{
+    "siteName":"siteNameNew",
+    "pageName":"pageNameNew",
+    "usernameWhoComment":"usernameWhoComment",
+
+    "text":"text",
+}
