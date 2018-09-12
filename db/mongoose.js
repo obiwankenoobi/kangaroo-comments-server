@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 let mongoose = require('mongoose');
-// let config = require('../server/config.js')
+let config = require('../routes/config')
 
 
 // checking for enviroment var for the mongo server and connect to it if there is one
