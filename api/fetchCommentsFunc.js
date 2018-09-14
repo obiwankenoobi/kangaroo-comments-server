@@ -1,4 +1,4 @@
-const {Website, Comment} = require('../db/models/Website');
+const {Website} = require('../db/models/Website');
 
 
 // function to fetch comments from the db based on the name of site and page
@@ -11,6 +11,9 @@ let fetchComments = async (siteName, pageName) => {
 			let pagesArr = site.pages; // assign the pages array to var
 			let pageObj = pagesArr.filter((page) => page.pageName == pageName)[0]; // grab the page we want from the array
 			console.log('pageObj', pageObj)
+
+			// cheking if there is a proper response (meaning if the pageName exist)
+			// if not - set noSiteFound so the user could create a new one
 			if (typeof pageObj != 'object') {
 				response = 'noSiteFound';
 			} else {
