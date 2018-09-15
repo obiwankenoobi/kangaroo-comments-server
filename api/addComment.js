@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const {
-	Website,
-	Comment
+	Website
 } = require('../db/models/Website');
+
 const {
 	helper
 } = require('../config');
@@ -117,6 +117,19 @@ function whereAddComment(req, res) {
 		token: siteName, // search website doc by the name given
 	}, (e, siteFound) => {
 
+		// function to save the mongo document
+		function saveComment() {
+			siteFound.save((e, saved) => { // saving doc function 
+				if (e) console.log('error while saving new comment', e)
+				if (saved) helper.alertD('new comment saved');
+			})
+		}
+
+		// send data back to server
+		function sendData() {
+			res.send('comment saved')
+		}
+
 		if (e) res.send({
 			error: e
 		});
@@ -124,6 +137,7 @@ function whereAddComment(req, res) {
 		else if (!siteFound) { // if there is no site with that name
 			console.log('invoked noSiteFound')
 			res.send('noSiteFound');
+
 		} else if (siteFound) { // if there is site with that name
 			console.log('siteFound');
 
@@ -133,7 +147,8 @@ function whereAddComment(req, res) {
 			let pageFound = pagesArr.filter((item) => item.pageName == pageName)[0];
 
 			if (pageFound) { // if there is page with that name
-				commentIdToReplyOn ? // if there is <commentIdToReplyOn> means comment on comment
+
+				commentIdToReplyOn ? // if <commentIdToReplyOn> means comment on comment because the clients passed the ID to reply on
 					searchAndAddComment(
 						siteFound, // object of the site wewant to modify
 						pageFound, // object of the page we want to modify
@@ -141,10 +156,8 @@ function whereAddComment(req, res) {
 						usernameWhoComment, // the username of the user who made the comment
 						text, // the comment text
 						date, // the date of comment
-						() => siteFound.save((e, saved) => { // saving doc function 
-							if (saved) helper.alertD('new comment saved');
-						}), // passing the save method
-						() => res.send('comment saved'), // sending response function
+						saveComment, // saving doc function 
+						sendData, // sending response function
 						pageName // the name of the page to modify
 					) : // if there isnt <commentIdToReplyOn> means comment on roor
 					addRootComment(
@@ -152,10 +165,8 @@ function whereAddComment(req, res) {
 						usernameWhoComment, // object of the page we want to modify
 						text, // the comment text
 						date, // the date of comment
-						() => siteFound.save((e, saved) => { // saving doc function 
-							if (saved) helper.alertD('new comment on root');
-						}),
-						() => res.send('comment saved'), // sending response function
+						saveComment, // saving doc function 
+						sendData, // sending response function
 						pageName // the name of the page to modify
 					);
 			} else { // if there isnt page with that name
@@ -172,10 +183,8 @@ function whereAddComment(req, res) {
 					usernameWhoComment, // object of the page we want to modify
 					text, // the comment text
 					date, // the date of comment
-					() => siteFound.save((e, saved) => { // saving doc function 
-						if (saved) helper.alertD('new comment on root');
-					}),
-					() => res.send('comment saved'), // sending response function
+					saveComment, // saving doc function 
+					sendData, // sending response function
 					pageName // the name of the page to modify
 				);
 			}
