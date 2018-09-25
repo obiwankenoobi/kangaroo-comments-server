@@ -9,8 +9,8 @@ router.get(
     failureRedirect: "/"
   }),
   (req, res) => {
-    console.log(req.body);
-    res.send(req.body);
+    console.log(req.user);
+    res.send(req.user);
   }
 );
 

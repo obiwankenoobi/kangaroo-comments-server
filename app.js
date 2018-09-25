@@ -9,6 +9,7 @@ const cors = require("cors");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const config = require("./routes/config");
+const session = require("express-session");
 
 // mongo imports
 const mongodb = require("mongodb");
@@ -29,6 +30,14 @@ const checkWebsite = require("./api/checkWebsite");
 const auth = require("./api/auth");
 const authCb = require("./api/authCb");
 
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+// google auth middleware
 passport.use(
   new GoogleStrategy(
     {
@@ -38,8 +47,7 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       console.log("this is user google", profile);
-      done(null, false);
-      return profile;
+      return done(null, profile); // returning the profile object with bull as the error handler
     }
   )
 );
@@ -63,10 +71,15 @@ app.use(
     extended: false
   })
 );
-app.use(cookieParser());
+app.use(cookieParser("Secret"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.use(limiter);
+
+// passport
+app.use(session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // routes
 app.use("/", index);
