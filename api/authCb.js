@@ -8,9 +8,10 @@ router.get(
     scope: ["https://www.googleapis.com/auth/plus.login"],
     failureRedirect: "/"
   }),
-  (req, res) => {
-    console.log(req.user);
-    res.send(req.user);
+  (req, res, next) => {
+    const { lastQuery } = req.session; // <== taking the query we asignied in /auth/google from req.session
+    console.log("lastQuery", lastQuery);
+    res.send({ user: req.user, lastQuery: lastQuery }); // sending full response with with the site name ans the user object
   }
 );
 

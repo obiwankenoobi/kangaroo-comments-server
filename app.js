@@ -21,7 +21,6 @@ const index = require("./routes/index");
 const users = require("./routes/users");
 
 const app = express();
-//app.io = require('socket.io')();
 
 //api
 const addComment = require("./api/addComment");
