@@ -18,12 +18,12 @@ function searchAndAddComment(
   // checking the string meet the rules
   if (
     !usernameWhoComment ||
-    usernameWhoComment.length < 5 ||
-    usernameWhoComment.length > 15 ||
+    //usernameWhoComment.length < 5 ||
+    //usernameWhoComment.length > 15 ||
     text.length < 5 ||
     text.length > 1000
   ) {
-    res.send("name must be 5-15 chars long - text must be 5-1000 chars");
+    helper.alertD("name must be 5-15 chars long - text must be 5-1000 chars");
   } else {
     // working code
     if (pageFound.comments.length > 0) {
@@ -72,12 +72,12 @@ function addRootComment(
   // checking the string meet the rules
   if (
     !usernameWhoComment ||
-    usernameWhoComment.length < 5 ||
-    usernameWhoComment.length > 15 ||
+    //usernameWhoComment.length < 5 ||
+    //usernameWhoComment.length > 15 ||
     text.length < 5 ||
     text.length > 1000
   ) {
-    res.send("name must be 5-15 chars long - text must be 5-1000 chars");
+    helper.alertD("name must be 5-15 chars long - text must be 5-1000 chars");
   } else {
     helper.alertD("addRootComment");
 

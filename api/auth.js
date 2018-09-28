@@ -9,7 +9,8 @@ router.get(
     let siteName = req.query.siteName;
     let pageName = req.query.pageName;
 
-    req.session.lastQuery = req.query; // asigning the query params to the "req.session" object to later access it in the /auth/google/callback
+    // asigning the query params to the "req.session" object to later access it in the /auth/google/callback
+    req.session.lastQuery = req.query;
     console.log("siteName", siteName);
     return next();
   },

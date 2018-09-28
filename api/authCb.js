@@ -11,7 +11,8 @@ function getPageData(req, res) {
   let pageData = {
     pageName: lastQuery.pageName,
     siteName: lastQuery.siteName,
-    token: lastQuery.token
+    token: lastQuery.token,
+    user: req.user
   };
 
   // setting the page data in the router pbject to later access it in the io connection
@@ -21,9 +22,11 @@ function getPageData(req, res) {
   const io = req.app.get("socketio");
 
   // emiting event with the strecture of <siteName-pageName-token>
-  // which will be userd to send the user google auth to the proper client
+  // which will be used to send the user object auth to the proper client based on that data
   io.sockets.emit(
-    `${res.pageData.siteName}-${res.pageData.pageName}-${res.pageData.token}`,
+    `googleAuth-${res.pageData.siteName}-${res.pageData.pageName}-${
+      res.pageData.token
+    }`,
     res.pageData
   );
 
