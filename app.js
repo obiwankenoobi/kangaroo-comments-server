@@ -29,6 +29,8 @@ const checkWebsite = require("./api/checkWebsite");
 const auth = require("./api/auth");
 const authCb = require("./api/authCb");
 
+// views
+
 //const { server, io } = require("./bin/www");
 //const io = require("socket.io")(server);
 

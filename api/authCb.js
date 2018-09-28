@@ -30,10 +30,11 @@ function getPageData(req, res) {
     res.pageData
   );
 
-  res.send({
-    user: req.user,
-    pageData: res.pageData
-  }); // sending full response with with the site name ans the user object
+  res.redirect("/authComplete.html");
+  // res.send({
+  //   user: req.user,
+  //   pageData: res.pageData
+  // }); // sending full response with with the site name ans the user object
 }
 // a wraper to the router so i could get access to the io server
 
