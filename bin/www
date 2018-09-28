@@ -4,30 +4,29 @@
  * Module dependencies.
  */
 
-var app = require("../app");
-var debug = require("debug")("server:server");
-var http = require("http");
+const app = require("../app");
+const debug = require("debug")("server:server");
+const http = require("http");
 
-let fetchComments = require("../api/fetchCommentsFunc");
+const fetchComments = require("../api/fetchCommentsFunc");
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || "3011");
+const port = normalizePort(process.env.PORT || "3011");
 app.set("port", port);
 
 /**
  * Create HTTP server.
  */
 
-let server = http.createServer(app);
-let io = require("socket.io")(server);
+const server = http.createServer(app);
+const io = require("socket.io")(server);
 
 // creating connection listener to the socket
 io.on("connection", socket => {
   console.log("user connected");
-
   // adding event listener:
   // on `comment` event (first arg (coming from the client)) invoke the callback which use <sockets.emit> to send the data back to the client
   socket.on("comment", async pageData => {
@@ -41,9 +40,11 @@ io.on("connection", socket => {
     };
     io.sockets.emit("comment", data); // <== sending the data back to the client
   });
-
   socket.on("disconnect", () => console.log("user disconected")); // when user done invoke the callback
 });
+app.set("socketio", io);
+
+console.log("this is io", io);
 
 /**
  * Listen on provided port, on all network interfaces.
