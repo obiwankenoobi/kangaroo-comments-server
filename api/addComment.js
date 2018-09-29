@@ -13,7 +13,8 @@ function searchAndAddComment(
   date, // the date the comment was generated
   save, // save function for the document (page.save)
   send, // send function (res.send)
-  pageName // the page name we want to add the comment to
+  pageName, // the page name we want to add the comment to
+  userAvatar // the user avatar
 ) {
   // checking the string meet the rules
   if (
@@ -38,7 +39,8 @@ function searchAndAddComment(
             commentIdToReplyOn: commentIdToReplyOn,
             commentId: new Date().getTime(),
             text: text,
-            date: date
+            date: date,
+            userAvatar: userAvatar
           };
           comment.comments.push(newComment); // pushing the comment to the comments array
           save(); // saving the doc
@@ -53,7 +55,8 @@ function searchAndAddComment(
           date, // the date the comment was generated
           save, // send function (res.send)
           send, // send function (res.send)
-          pageName // the page name we want to add the comment to
+          pageName, // the page name we want to add the comment to
+          userAvatar // the user avatar
         );
       });
     }
@@ -67,7 +70,8 @@ function addRootComment(
   date, // date of comment
   save, // save functio
   send, // send back function
-  pageName // the page name we want to add the comment to
+  pageName, // the page name we want to add the comment to
+  userAvatar // the user avatar
 ) {
   // checking the string meet the rules
   if (
@@ -86,7 +90,8 @@ function addRootComment(
       usernameWhoComment: usernameWhoComment,
       commentId: new Date().getTime(),
       text: text,
-      date: date
+      date: date,
+      userAvatar: userAvatar
     };
 
     let pages = websiteFound.pages; // array of pages
@@ -111,7 +116,8 @@ function whereAddComment(req, res) {
     commentIdToReplyOn, // the ID of the comment to reply on
     usernameWhoComment, // the username of the user who made the comment
     text, // the text of comment
-    date
+    date,
+    userAvatar
   } = req.body;
 
   helper.alertD(siteName, pageName, commentIdToReplyOn);
@@ -165,7 +171,8 @@ function whereAddComment(req, res) {
                 date, // the date of comment
                 saveComment, // saving doc function
                 sendData, // sending response function
-                pageName // the name of the page to modify
+                pageName, // the name of the page to modify
+                userAvatar // the user avatar
               ) // if there isnt <commentIdToReplyOn> means comment on roor
             : addRootComment(
                 siteFound, // object of the site wewant to modify
@@ -174,7 +181,8 @@ function whereAddComment(req, res) {
                 date, // the date of comment
                 saveComment, // saving doc function
                 sendData, // sending response function
-                pageName // the name of the page to modify
+                pageName, // the name of the page to modify
+                userAvatar // the user avatar
               );
         } else {
           // if there isnt page with that name
@@ -193,7 +201,8 @@ function whereAddComment(req, res) {
             date, // the date of comment
             saveComment, // saving doc function
             sendData, // sending response function
-            pageName // the name of the page to modify
+            pageName, // the name of the page to modify
+            userAvatar // the user avatar
           );
         }
       }
