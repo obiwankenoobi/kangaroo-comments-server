@@ -10,18 +10,18 @@ let fetchComments = async (siteName, pageName) => {
           token: siteName
         },
         (e, site) => {
-          // searching for the website
+          // assiging error ro response if there is one
           if (e)
             resolve({
               error: e
-            }); // assiging error ro response if there is one
+            });
+          // if site found and there is already comments there
           if (site && site.pages.length > 0) {
-            // if site found and there is already comments there
             let pagesArr = site.pages; // assign the pages array to var
             let pageObj = pagesArr.find(page => page.pageName == pageName); // grab the page we want from the array
             console.log("pageObj", pageObj);
 
-            // cheking if there is a proper response (meaning if the pageName exist)
+            // checking if there is a proper response (meaning if the pageName exist)
             // if not - set noSiteFound so the user could create a new one
             if (typeof pageObj != "object") {
               resolve("noSiteFound");
@@ -34,7 +34,6 @@ let fetchComments = async (siteName, pageName) => {
     });
 
   return await promiseForCommentsOrError();
-  // console.log("whatsHEREnow", whatsHEREnow);
 };
 
 module.exports = fetchComments;

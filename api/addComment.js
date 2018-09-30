@@ -12,7 +12,7 @@ function searchAndAddComment(
   text, // the text of comment
   date, // the date the comment was generated
   save, // save function for the document (page.save)
-  send, // send function (res.send)
+  //send, // send function (res.send)
   pageName, // the page name we want to add the comment to
   userAvatar // the user avatar
 ) {
@@ -44,7 +44,7 @@ function searchAndAddComment(
           };
           comment.comments.push(newComment); // pushing the comment to the comments array
           save(); // saving the doc
-          send(); // sending response
+          //send(); // sending response
         }
         searchAndAddComment(
           siteFound, // the site obj we want to modify
@@ -54,7 +54,7 @@ function searchAndAddComment(
           text, // the text of comment
           date, // the date the comment was generated
           save, // send function (res.send)
-          send, // send function (res.send)
+          //send, // send function (res.send)
           pageName, // the page name we want to add the comment to
           userAvatar // the user avatar
         );
@@ -69,7 +69,7 @@ function addRootComment(
   text, // the text of comment
   date, // date of comment
   save, // save functio
-  send, // send back function
+  //send, // send back function
   pageName, // the page name we want to add the comment to
   userAvatar // the user avatar
 ) {
@@ -103,7 +103,7 @@ function addRootComment(
     pageCommentsToAddTo.push(newComment); // pushing the root comment to the root page object
 
     save(); // save the doc
-    send(); // send response
+    //send(); // send response
   }
 }
 
@@ -132,14 +132,20 @@ function whereAddComment(req, res) {
         siteFound.save((e, saved) => {
           // saving doc function
           if (e) console.error("error while saving new comment", e);
-          if (saved) helper.alertD("new comment saved");
+          if (saved) {
+            helper.alertD("new comment saved");
+            res.send("comment saved");
+          }
         });
       }
 
-      // send data back to server
-      function sendData() {
-        res.send("comment saved");
-      }
+      /**
+       ** function meant to let the client know a commant has seen sent
+       ** now it has been merged with saveComment()
+       **/
+      // function sendData() {
+      //   res.send("comment saved");
+      // }
 
       if (e)
         res.send({
@@ -161,7 +167,7 @@ function whereAddComment(req, res) {
         if (pageFound) {
           // if there is page with that name
 
-          commentIdToReplyOn // if <commentIdToReplyOn> means comment on comment because the clients passed the ID to reply on
+          commentIdToReplyOn // if <commentIdToReplyOn> means the user wants to comment on comment because the clients passed the ID to reply on
             ? searchAndAddComment(
                 siteFound, // object of the site wewant to modify
                 pageFound, // object of the page we want to modify
@@ -170,7 +176,7 @@ function whereAddComment(req, res) {
                 text, // the comment text
                 date, // the date of comment
                 saveComment, // saving doc function
-                sendData, // sending response function
+                //sendData, // sending response function
                 pageName, // the name of the page to modify
                 userAvatar // the user avatar
               ) // if there isnt <commentIdToReplyOn> means comment on roor
@@ -180,7 +186,7 @@ function whereAddComment(req, res) {
                 text, // the comment text
                 date, // the date of comment
                 saveComment, // saving doc function
-                sendData, // sending response function
+                //sendData, // sending response function
                 pageName, // the name of the page to modify
                 userAvatar // the user avatar
               );
@@ -200,7 +206,7 @@ function whereAddComment(req, res) {
             text, // the comment text
             date, // the date of comment
             saveComment, // saving doc function
-            sendData, // sending response function
+            //sendData, // sending response function
             pageName, // the name of the page to modify
             userAvatar // the user avatar
           );
