@@ -5,7 +5,7 @@ const passport = require("passport");
 // function to get user data from the query and set it into res.pageData to send it to the client
 function getPageData(req, res) {
   const { lastQuery } = req.session; // <== taking the query we asignied in /auth/google from req.session
-  console.log("lastQuery", lastQuery);
+  //console.log("lastQuery", lastQuery);
 
   // getting the page data and assigning it to an object
   let pageData = {

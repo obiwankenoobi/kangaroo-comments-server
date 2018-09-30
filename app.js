@@ -50,7 +50,7 @@ passport.use(
       callbackURL: "http://localhost:3011/auth/google/callback"
     },
     (accessToken, refreshToken, profile, done) => {
-      console.log("this is user google", profile);
+      //console.log("this is user google", profile);
       return done(null, profile); // returning the profile object with bull as the error handler
     }
   )

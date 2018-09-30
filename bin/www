@@ -44,7 +44,7 @@ io.on("connection", socket => {
 });
 app.set("socketio", io);
 
-console.log("this is io", io);
+// console.log("this is io", io);
 
 /**
  * Listen on provided port, on all network interfaces.
