@@ -9,9 +9,13 @@ router.get(
     let siteName = req.query.siteName;
     let pageName = req.query.pageName;
 
-    // asigning the query params to the "req.session" object to later access it in the /auth/google/callback
-    req.session.lastQuery = req.query;
-    console.log("siteName", siteName);
+    /**
+     ** setting the lastQuery object in the global scope of app
+     ** to use later in /auth/google/callback
+     ** we have access to app through req.app because we added it in /bin/www
+     **/
+    const app = req.app.get("app");
+    app.set("lastQuery", req.query);
     return next();
   },
   passport.authenticate("google", {

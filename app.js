@@ -34,11 +34,11 @@ const authCb = require("./api/authCb");
 //const { server, io } = require("./bin/www");
 //const io = require("socket.io")(server);
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser(function(obj, done) {
+passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
 // google auth middleware
@@ -75,15 +75,15 @@ app.use(
     extended: false
   })
 );
-app.use(cookieParser("Secret"));
+app.use(cookieParser("keyboard cat"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.use(limiter);
 
 // passport
-app.use(session());
+app.use(session({ secret: "keyboard cat" }));
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session({ secret: "keyboard cat" }));
 
 // routes
 app.use("/", index);

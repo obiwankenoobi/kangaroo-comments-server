@@ -44,6 +44,11 @@ io.on("connection", socket => {
 });
 app.set("socketio", io);
 
+/**
+ ** setting the app object inside the app object
+ ** to later be abale to use app.set in /auth/google route
+ **/
+app.set("app", app);
 // console.log("this is io", io);
 
 /**
