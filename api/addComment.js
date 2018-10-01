@@ -12,33 +12,19 @@ function searchAndAddComment(
   text, // the text of comment
   date, // the date the comment was generated
   save, // save function for the document (page.save)
-<<<<<<< HEAD
-  send, // send function (res.send)
-  pageName // the page name we want to add the comment to
-=======
   //send, // send function (res.send)
   pageName, // the page name we want to add the comment to
   userAvatar // the user avatar
->>>>>>> googleAuth
 ) {
   // checking the string meet the rules
   if (
     !usernameWhoComment ||
-<<<<<<< HEAD
-    usernameWhoComment.length < 5 ||
-    usernameWhoComment.length > 15 ||
-    text.length < 5 ||
-    text.length > 1000
-  ) {
-    res.send("name must be 5-15 chars long - text must be 5-1000 chars");
-=======
     //usernameWhoComment.length < 5 ||
     //usernameWhoComment.length > 15 ||
     text.length < 5 ||
     text.length > 1000
   ) {
     helper.alertD("name must be 5-15 chars long - text must be 5-1000 chars");
->>>>>>> googleAuth
   } else {
     // working code
     if (pageFound.comments.length > 0) {
@@ -53,20 +39,12 @@ function searchAndAddComment(
             commentIdToReplyOn: commentIdToReplyOn,
             commentId: new Date().getTime(),
             text: text,
-<<<<<<< HEAD
-            date: date
-          };
-          comment.comments.push(newComment); // pushing the comment to the comments array
-          save(); // saving the doc
-          send(); // sending response
-=======
             date: date,
             userAvatar: userAvatar
           };
           comment.comments.push(newComment); // pushing the comment to the comments array
           save(); // saving the doc
           //send(); // sending response
->>>>>>> googleAuth
         }
         searchAndAddComment(
           siteFound, // the site obj we want to modify
@@ -76,14 +54,9 @@ function searchAndAddComment(
           text, // the text of comment
           date, // the date the comment was generated
           save, // send function (res.send)
-<<<<<<< HEAD
-          send, // send function (res.send)
-          pageName // the page name we want to add the comment to
-=======
           //send, // send function (res.send)
           pageName, // the page name we want to add the comment to
           userAvatar // the user avatar
->>>>>>> googleAuth
         );
       });
     }
@@ -96,33 +69,19 @@ function addRootComment(
   text, // the text of comment
   date, // date of comment
   save, // save functio
-<<<<<<< HEAD
-  send, // send back function
-  pageName // the page name we want to add the comment to
-=======
   //send, // send back function
   pageName, // the page name we want to add the comment to
   userAvatar // the user avatar
->>>>>>> googleAuth
 ) {
   // checking the string meet the rules
   if (
     !usernameWhoComment ||
-<<<<<<< HEAD
-    usernameWhoComment.length < 5 ||
-    usernameWhoComment.length > 15 ||
-    text.length < 5 ||
-    text.length > 1000
-  ) {
-    res.send("name must be 5-15 chars long - text must be 5-1000 chars");
-=======
     //usernameWhoComment.length < 5 ||
     //usernameWhoComment.length > 15 ||
     text.length < 5 ||
     text.length > 1000
   ) {
     helper.alertD("name must be 5-15 chars long - text must be 5-1000 chars");
->>>>>>> googleAuth
   } else {
     helper.alertD("addRootComment");
 
@@ -131,12 +90,8 @@ function addRootComment(
       usernameWhoComment: usernameWhoComment,
       commentId: new Date().getTime(),
       text: text,
-<<<<<<< HEAD
-      date: date
-=======
       date: date,
       userAvatar: userAvatar
->>>>>>> googleAuth
     };
 
     let pages = websiteFound.pages; // array of pages
@@ -148,11 +103,7 @@ function addRootComment(
     pageCommentsToAddTo.push(newComment); // pushing the root comment to the root page object
 
     save(); // save the doc
-<<<<<<< HEAD
-    send(); // send response
-=======
     //send(); // send response
->>>>>>> googleAuth
   }
 }
 
@@ -165,12 +116,8 @@ function whereAddComment(req, res) {
     commentIdToReplyOn, // the ID of the comment to reply on
     usernameWhoComment, // the username of the user who made the comment
     text, // the text of comment
-<<<<<<< HEAD
-    date
-=======
     date,
     userAvatar
->>>>>>> googleAuth
   } = req.body;
 
   helper.alertD(siteName, pageName, commentIdToReplyOn);
@@ -184,17 +131,6 @@ function whereAddComment(req, res) {
       function saveComment() {
         siteFound.save((e, saved) => {
           // saving doc function
-<<<<<<< HEAD
-          if (e) console.log("error while saving new comment", e);
-          if (saved) helper.alertD("new comment saved");
-        });
-      }
-
-      // send data back to server
-      function sendData() {
-        res.send("comment saved");
-      }
-=======
           if (e) console.error("error while saving new comment", e);
           if (saved) {
             helper.alertD("new comment saved");
@@ -210,7 +146,6 @@ function whereAddComment(req, res) {
       // function sendData() {
       //   res.send("comment saved");
       // }
->>>>>>> googleAuth
 
       if (e)
         res.send({
@@ -232,11 +167,7 @@ function whereAddComment(req, res) {
         if (pageFound) {
           // if there is page with that name
 
-<<<<<<< HEAD
-          commentIdToReplyOn // if <commentIdToReplyOn> means comment on comment because the clients passed the ID to reply on
-=======
           commentIdToReplyOn // if <commentIdToReplyOn> means the user wants to comment on comment because the clients passed the ID to reply on
->>>>>>> googleAuth
             ? searchAndAddComment(
                 siteFound, // object of the site wewant to modify
                 pageFound, // object of the page we want to modify
@@ -245,14 +176,9 @@ function whereAddComment(req, res) {
                 text, // the comment text
                 date, // the date of comment
                 saveComment, // saving doc function
-<<<<<<< HEAD
-                sendData, // sending response function
-                pageName // the name of the page to modify
-=======
                 //sendData, // sending response function
                 pageName, // the name of the page to modify
                 userAvatar // the user avatar
->>>>>>> googleAuth
               ) // if there isnt <commentIdToReplyOn> means comment on roor
             : addRootComment(
                 siteFound, // object of the site wewant to modify
@@ -260,14 +186,9 @@ function whereAddComment(req, res) {
                 text, // the comment text
                 date, // the date of comment
                 saveComment, // saving doc function
-<<<<<<< HEAD
-                sendData, // sending response function
-                pageName // the name of the page to modify
-=======
                 //sendData, // sending response function
                 pageName, // the name of the page to modify
                 userAvatar // the user avatar
->>>>>>> googleAuth
               );
         } else {
           // if there isnt page with that name
@@ -285,14 +206,9 @@ function whereAddComment(req, res) {
             text, // the comment text
             date, // the date of comment
             saveComment, // saving doc function
-<<<<<<< HEAD
-            sendData, // sending response function
-            pageName // the name of the page to modify
-=======
             //sendData, // sending response function
             pageName, // the name of the page to modify
             userAvatar // the user avatar
->>>>>>> googleAuth
           );
         }
       }
