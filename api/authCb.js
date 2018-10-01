@@ -20,7 +20,12 @@ function getPageData(req, res) {
 
   // setting the page data in the router pbject to later access it in the io connection
   res.pageData = pageData;
-
+  console.log(
+    "socket.emit",
+    `googleAuth-${res.pageData.siteName}-${res.pageData.pageName}-${
+      res.pageData.token
+    }`
+  );
   // calling the io instance that we set in the io initialization in /bin/www
   const io = req.app.get("socketio");
 
