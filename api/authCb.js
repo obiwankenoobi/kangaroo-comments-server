@@ -4,10 +4,16 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const config = require("../routes/config");
 
-// function to get user data from the query and set it into res.pageData to send it to the client
+/**
+ ** @ { function } getPageData - function to get all the user data we need to send back to the client
+ */
+
 function getPageData(req, res) {
   /**
-   ** getting the lastQuery object from req.app (we added it in /auth/google)
+   ** @ { object } lastQuery - the object with the query from url from req.app (we added it in /auth/google)
+   ** @ { object } token - creating new access token to authenticate requests later on
+   ** @ { object } pageData - all the data we need to pass back to client
+   ** @ { object } io - instance of the IO connectiong we created, it added to <app> in /bin/www
    **/
   const lastQuery = req.app.get("lastQuery");
 
@@ -23,25 +29,25 @@ function getPageData(req, res) {
     {}
   );
 
-  req.user.accessToken = token;
+  req.user.accessToken = token; // adding the token to the user object returned from google auth
 
-  // getting the page data and assigning it to an object
   let pageData = {
-    pageName: lastQuery.pageName,
-    siteName: lastQuery.siteName,
-    token: lastQuery.token,
-    user: req.user
+    pageName: lastQuery.pageName, // ID for the page we send the data to
+    siteName: lastQuery.siteName, // ID for the site we send the data to
+    token: lastQuery.token, // token to identify the user who tried to login ( need because we using socket.io and need to identify each user so be send to the right client )
+    user: req.user // the user auth object returned from google auth
   };
 
   // setting the page data in the router pbject to later access it in the io connection
   res.pageData = pageData;
+
   console.log(
     "socket.emit",
     `googleAuth-${res.pageData.siteName}-${res.pageData.pageName}-${
       res.pageData.token
     }`
   );
-  // calling the io instance that we set in the io initialization in /bin/www
+
   const io = req.app.get("socketio");
 
   // emiting event with the strecture of <siteName-pageName-token>

@@ -1,7 +1,14 @@
 const { Website } = require("../db/models/Website");
 
-// function to fetch comments from the db based on the name of site and page
+/**
+ ** @ { fetchComments } - function to fetch comments from the db based on the name of site and page
+ */
+//
 let fetchComments = async (siteName, pageName) => {
+  /**
+   ** @ { function } promiseForCommentsOrError - returning pronmise with the data that back from the database -
+   ** can be: { obejct } - data returned , { string } - no data found
+   */
   console.log("siteName", siteName);
   let promiseForCommentsOrError = () =>
     new Promise(resolve => {

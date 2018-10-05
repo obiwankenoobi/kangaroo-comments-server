@@ -4,6 +4,12 @@ const { Website } = require("../db/models/Website");
 const authMiddleware = require("../middleware/authMiddleware");
 const { helper } = require("../config");
 
+/**
+ ** @ { function } searchAndAddComment - function to search the exact comment to comment on based on the params passed to it
+ ** @ { function } addRootComment - function to add comment to the root of the page - a.i. not to comment on anyones comments, decided by the fact @ { param } commentIdToReplyOn - insnt exist
+ ** @ { function } whereAddComment - function to decide where to add comment - on root or on another comment
+ */
+
 function searchAndAddComment(
   siteFound, // the site obj we want to modify
   pageFound, // the page obj we want to modify
@@ -17,16 +23,9 @@ function searchAndAddComment(
   userAvatar // the user avatar
 ) {
   // checking the string meet the rules
-  if (
-    !usernameWhoComment ||
-    //usernameWhoComment.length < 5 ||
-    //usernameWhoComment.length > 15 ||
-    text.length < 5 ||
-    text.length > 1000
-  ) {
+  if (!usernameWhoComment || text.length < 5 || text.length > 1000) {
     helper.alertD("name must be 5-15 chars long - text must be 5-1000 chars");
   } else {
-    // working code
     if (pageFound.comments.length > 0) {
       // if the comments array in the page we found isnt empty
       pageFound.comments.map(comment => {
@@ -74,13 +73,7 @@ function addRootComment(
   userAvatar // the user avatar
 ) {
   // checking the string meet the rules
-  if (
-    !usernameWhoComment ||
-    //usernameWhoComment.length < 5 ||
-    //usernameWhoComment.length > 15 ||
-    text.length < 5 ||
-    text.length > 1000
-  ) {
+  if (!usernameWhoComment || text.length < 5 || text.length > 1000) {
     helper.alertD("name must be 5-15 chars long - text must be 5-1000 chars");
   } else {
     helper.alertD("addRootComment");
@@ -103,12 +96,9 @@ function addRootComment(
     pageCommentsToAddTo.push(newComment); // pushing the root comment to the root page object
 
     save(); // save the doc
-    //send(); // send response
   }
 }
 
-// this function decide where to add the comment that has being passed
-// to the root artical or to another comment
 function whereAddComment(req, res) {
   const {
     siteName, // the name of the site to modify
@@ -139,14 +129,6 @@ function whereAddComment(req, res) {
         });
       }
 
-      /**
-       ** function meant to let the client know a commant has seen sent
-       ** now it has been merged with saveComment()
-       **/
-      // function sendData() {
-      //   res.send("comment saved");
-      // }
-
       if (e)
         res.send({
           error: e
@@ -176,7 +158,6 @@ function whereAddComment(req, res) {
                 text, // the comment text
                 date, // the date of comment
                 saveComment, // saving doc function
-                //sendData, // sending response function
                 pageName, // the name of the page to modify
                 userAvatar // the user avatar
               ) // if there isnt <commentIdToReplyOn> means comment on roor
@@ -186,7 +167,6 @@ function whereAddComment(req, res) {
                 text, // the comment text
                 date, // the date of comment
                 saveComment, // saving doc function
-                //sendData, // sending response function
                 pageName, // the name of the page to modify
                 userAvatar // the user avatar
               );
@@ -206,7 +186,6 @@ function whereAddComment(req, res) {
             text, // the comment text
             date, // the date of comment
             saveComment, // saving doc function
-            //sendData, // sending response function
             pageName, // the name of the page to modify
             userAvatar // the user avatar
           );
