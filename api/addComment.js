@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Website } = require("../db/models/Website");
-
+const authMiddleware = require("../middleware/authMiddleware");
 const { helper } = require("../config");
 
 function searchAndAddComment(
@@ -216,8 +216,12 @@ function whereAddComment(req, res) {
   );
 }
 
-router.post("/", (req, res, next) => {
-  whereAddComment(req, res);
-});
+router.post(
+  "/",
+  (req, res, next) => authMiddleware(req, res, next),
+  (req, res, next) => {
+    whereAddComment(req, res);
+  }
+);
 
 module.exports = router;
