@@ -1,7 +1,7 @@
 const { Website } = require("../db/models/Website");
 
 /**
- ** @ { fetchComments } - function to fetch comments from the db based on the name of site and page
+ ** @ { function } fetchComments - function to fetch comments from the db based on the name of site and page
  */
 //
 let fetchComments = async (siteName, pageName) => {
