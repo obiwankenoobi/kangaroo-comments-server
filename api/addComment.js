@@ -3,6 +3,7 @@ const router = express.Router();
 const { Website } = require("../db/models/Website");
 const authMiddleware = require("../middleware/authMiddleware");
 const { helper } = require("../config");
+const xss = require("xss");
 
 /**
  ** @ { function } searchAndAddComment - function to search the exact comment to comment on based on the params passed to it
@@ -37,7 +38,7 @@ function searchAndAddComment(
             usernameWhoComment: usernameWhoComment,
             commentIdToReplyOn: commentIdToReplyOn,
             commentId: new Date().getTime(),
-            text: text,
+            text: xss(text),
             date: date,
             userAvatar: userAvatar
           };
@@ -82,7 +83,7 @@ function addRootComment(
     let newComment = {
       usernameWhoComment: usernameWhoComment,
       commentId: new Date().getTime(),
-      text: text,
+      text: xss(text),
       date: date,
       userAvatar: userAvatar
     };
