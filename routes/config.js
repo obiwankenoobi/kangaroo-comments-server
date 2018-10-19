@@ -7,8 +7,6 @@ let config = {
   mongoUsername: process.env.mongoUsername || "<mongo username>", // if you have your db
   mongoPw: process.env.mongoPw || "<mongo pw>", // if you have your db
   mongoUrl: process.env.mongoUrl || "<mongo remote server url>"
-  //server:process.env.server || 'http://localhost:3011', // your frontend server
-  //frontEndServer:process.env.frontEndServer || 'http://localhost:3001', // your front end server
 };
 
 module.exports = config;
